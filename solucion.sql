@@ -81,5 +81,35 @@ SELECT c2.FirstName, (
 FROM customer c2;
 
 /* Solución 11 */
+SELECT *
+FROM student s
+ORDER BY s.GPA DESC
+LIMIT 5;
+
 /* Solución 12 */
+SELECT s2.school_name, COUNT(*) AS 'count'
+FROM student s
+INNER JOIN school s2 ON s.school_id = s2.school_id
+GROUP BY s2.school_id, s2.school_name;
+
 /* Solución 13 */
+WITH RankedStudents AS (
+    SELECT
+        s.school_id,
+		s.student_name,
+        s.gpa,
+        RANK() OVER (PARTITION BY s.school_id ORDER BY s.gpa DESC) AS `rank`
+    FROM
+        student s
+)
+SELECT
+    school_id,
+    student_name,
+    gpa
+FROM
+    RankedStudents
+WHERE
+    `rank` <= 3
+ORDER BY
+    school_id,
+    `rank`;
