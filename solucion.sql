@@ -38,9 +38,17 @@ LEFT JOIN customer c ON c.CustId = a.CustId
 WHERE DAY(STR_TO_DATE(b.BetDate, '%m/%d/%Y')) > 0 AND MONTH(STR_TO_DATE(b.BetDate, '%m/%d/%Y')) = 11 AND p.product = 'Sportsbook'
 GROUP BY a.CurrencyCode, c.CustomerGroup;
 
-
-
 /* Solución 7 */
+SELECT c.Title, c.FirstName, c.LastName, con.`count`
+FROM customer c
+INNER JOIN (
+	SELECT c.CustId, COUNT(*) AS 'count'
+	FROM customer c
+	LEFT OUTER JOIN account a ON a.CustId = c.CustId
+	LEFT OUTER JOIN betting b ON b.AccountNo = a.AccountNo
+	GROUP BY c.CustId
+) con ON con.CustId = c.CustId;
+
 /* Solución 8 */
 /* Solución 9 */
 /* Solución 10 */
