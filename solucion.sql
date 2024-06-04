@@ -23,7 +23,23 @@ INNER JOIN betting b ON b.Product = p.product
 GROUP BY 1, 2;
 
 /* Solución 5 */
+SELECT p.product, DAY(STR_TO_DATE(b.BetDate, '%m/%d/%Y')) AS 'day', COUNT(*) AS 'total'
+FROM product p
+INNER JOIN betting b ON b.Product = p.product
+WHERE DAY(STR_TO_DATE(b.BetDate, '%m/%d/%Y')) > 0 AND MONTH(STR_TO_DATE(b.BetDate, '%m/%d/%Y')) = 11 AND p.product = 'Sportsbook'
+GROUP BY 1, 2;
+
 /* Solución 6 */
+SELECT p.product, a.CurrencyCode, c.CustomerGroup
+FROM product p
+LEFT JOIN betting b ON b.Product = p.product
+LEFT JOIN account a ON b.AccountNo = a.AccountNo
+LEFT JOIN customer c ON c.CustId = a.CustId
+WHERE DAY(STR_TO_DATE(b.BetDate, '%m/%d/%Y')) > 0 AND MONTH(STR_TO_DATE(b.BetDate, '%m/%d/%Y')) = 11 AND p.product = 'Sportsbook'
+GROUP BY a.CurrencyCode, c.CustomerGroup;
+
+
+
 /* Solución 7 */
 /* Solución 8 */
 /* Solución 9 */
