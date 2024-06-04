@@ -65,7 +65,21 @@ INNER JOIN product p ON b.Product = p.product
 WHERE p.product IN ('Sportsbook', 'Vegas');
 
 /* Solución 9 */
+
+
 /* Solución 10 */
+SELECT c2.FirstName, (
+	SELECT b.Product
+	FROM customer c
+	INNER JOIN account a ON a.CustId = c.CustId
+	INNER JOIN betting b ON b.AccountNo = a.AccountNo
+	WHERE c.CustId = c2.CustId
+	GROUP BY b.Product
+	ORDER BY SUM(b.Bet_Amt) DESC
+	LIMIT 1
+) AS 'favourite'
+FROM customer c2;
+
 /* Solución 11 */
 /* Solución 12 */
 /* Solución 13 */
