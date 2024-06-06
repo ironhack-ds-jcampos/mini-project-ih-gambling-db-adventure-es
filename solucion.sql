@@ -65,7 +65,13 @@ INNER JOIN product p ON b.Product = p.product
 WHERE p.product IN ('Sportsbook', 'Vegas');
 
 /* Solución 9 */
-
+SELECT c.CustId, SUM(Bet_Amt) AS 'suma'
+FROM Betting b
+JOIN Account a ON b.AccountNo = a.AccountNo
+JOIN Customer c ON a.CustId = c.CustId
+WHERE Product = 'Sportsbook' AND Bet_Amt > 0
+GROUP BY c.CustId
+HAVING COUNT(DISTINCT Product) = 1;
 
 /* Solución 10 */
 SELECT c2.FirstName, (
